@@ -25,9 +25,9 @@ npm install
 npm start
 ```
 
-Navigate to `http://localhost`
+- Navigate to `http://localhost`
 
-- API Postman Collection
+# Importing API Collection in Postman
 
-  You can check the endpoints by importing this collection to postman:
-  https://www.getpostman.com/collections/8dfef512265590bd97a8
+You can check the endpoints by importing this collection to postman:
+https://www.getpostman.com/collections/8dfef512265590bd97a8
