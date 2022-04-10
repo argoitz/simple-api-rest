@@ -30,7 +30,7 @@ docker-compose up
 winpty docker exec -it simple-api-rest bash
 ```
 
-- Navigate to `http://localhost`
+- Navigate to `http://localhost:3000`
 
 # Importing API Collection in Postman
 
