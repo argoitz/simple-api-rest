@@ -2,7 +2,7 @@
 
 # Pre-requisites
 
-- Install [Node.js](https://nodejs.org/en/) version 16.13.0
+- Install [Docker compose](https://docs.docker.com/compose/install/)
 
 # Getting started
 
@@ -12,17 +12,22 @@
 git clone  https://github.com/argoitz/simple-api-rest.git
 ```
 
-- Install dependencies
+- Create Docker container
 
 ```
-cd simple-api-rest
-npm install
+docker-compose build
 ```
 
-- Build and run the project
+- Run Docker container
 
 ```
-npm start
+docker-compose up
+```
+
+- Connect to docker container
+
+```
+winpty docker exec -it simple-api-rest bash
 ```
 
 - Navigate to `http://localhost`

@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+require("./database");
+
 app.use(express.json());
 
 const students = [
@@ -53,5 +55,5 @@ app.delete("/api/students/:id", (req, res) => {
   res.send(student);
 });
 
-const port = process.env.port || 80;
+const port = process.env.port || 3000;
 app.listen(port, () => console.log(`Listening in ${port}`));
