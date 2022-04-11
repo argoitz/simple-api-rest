@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+const studentModel = require("../models/studentsModel");
 
 const students = [
   { id: 1, name: "Paco", age: 23, enroll: true },
@@ -14,41 +15,64 @@ router.get("/", (req, res) => {
 });
 
 //Get all students
-router.get("/api/students", (req, res) => {
-  res.send(students);
+router.get("/api/students", async (req, res) => {
+  try {
+    const students = await studentModel.find({});
+    res.send(students);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 //Get Student by id
-router.get("/api/student/:id", (req, res) => {
-  const student = students.find((s) => s.id === parseInt(req.params.id));
-  if (!student) return res.status(400).send("Student does not exist");
-  else res.send(student);
+router.get("/api/student/:id", async (req, res) => {
+  try {
+    const student = await studentModel.find({ _id: req.params.id });
+    res.send(student);
+  } catch (error) {
+    return res.status(500).send(err);
+  }
 });
 
 //Create new Student
-router.post("/api/students", (req, res) => {
-  const student = {
-    id: students.length + 1,
-    name: req.body.name,
-    age: parseInt(req.body.age),
-    enroll: req.body.enroll === "true",
-  };
+router.post("/api/students", async (req, res) => {
+  const studentM = new studentModel(req.body);
 
-  students.push(student);
-  res.send(student);
+  try {
+    await studentM.save();
+    return res.send({ message: "Student saved", student: studentM });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+});
+
+// //UPDATE Student by id
+//TODO: return new user
+//TODO: Catch error if extra fields
+router.put("/api/students/:id", async (req, res) => {
+  const studentM = new studentModel(req.body);
+
+  try {
+    await studentModel.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: studentM }
+    );
+    res.send({ message: "User updated" });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 });
 
 //DELETE Student by id
-router.delete("/api/students/:id", (req, res) => {
-  const student = students.find((s) => s.id === parseInt(req.params.id));
-  if (!student)
-    return res
-      .status(400)
-      .send(`Student with id '${req.params.id}' does not exist`);
-
-  const index = students.indexOf(student);
-  students.splice(index, 1);
-  res.send(student);
+router.delete("/api/students/:id", async (req, res) => {
+  studentModel.findByIdAndRemove(req.params.id, (err, student) => {
+    if (!err) {
+      if (!student) res.send({ message: "Student not found" });
+      else res.send({ message: "Student Removed", student: student });
+    } else {
+      res.status(500).send(err);
+    }
+  });
 });
 
 module.exports = router;
