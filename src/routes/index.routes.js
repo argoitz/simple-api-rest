@@ -48,16 +48,14 @@ router.post("/api/students", async (req, res) => {
 
 // //UPDATE Student by id
 //TODO: return new user
-//TODO: Catch error if extra fields
 router.put("/api/students/:id", async (req, res) => {
-  const studentM = new studentModel(req.body);
-
+  // const studentM = new studentModel(req.body);
   try {
     await studentModel.findOneAndUpdate(
       { _id: req.params.id },
-      { $set: studentM }
+      { $set: req.body }
     );
-    res.send({ message: "User updated" });
+    res.send({ message: "User updated", user: req.body });
   } catch (error) {
     return res.status(500).send(error);
   }
