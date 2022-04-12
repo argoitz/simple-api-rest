@@ -10,9 +10,9 @@ const StudentSchema = new mongoose.Schema({
     default: 0,
   },
   enroll: {
-      type: Boolean,
-      default: false
-  }
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Student = mongoose.model("Student", StudentSchema);

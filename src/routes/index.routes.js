@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const studentModel = require("../models/studentsModel");
+const studentModel = require("../models/student-model");
 
 const students = [
   { id: 1, name: "Paco", age: 23, enroll: true },
