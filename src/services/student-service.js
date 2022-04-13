@@ -29,5 +29,6 @@ StudentSchema.methods.joiValidate = function (obj) {
 
 //TODO: add methods to validate, get, update and remove calling student-model
 //TODO: Export methods and validations
+//TODO: Create .env file
 
 module.exports = mongoose.model("Student", StudentSchema);
