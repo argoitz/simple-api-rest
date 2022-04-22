@@ -35,4 +35,4 @@ winpty docker exec -it simple-api-rest bash
 # Importing API Collection in Postman
 
 You can check the endpoints by importing this collection to postman:
-https://www.getpostman.com/collections/8dfef512265590bd97a8
+https://www.getpostman.com/collections/f86bd8d2d1ba683bf9bf

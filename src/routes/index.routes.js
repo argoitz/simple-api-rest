@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const studentModel = require("../models/student-model");
 
+//TODO: MOVE TO SEED
 const students = [
   { id: 1, name: "Paco", age: 23, enroll: true },
   { id: 2, name: "Maria", age: 25, enroll: true },
@@ -11,64 +12,96 @@ const students = [
 
 //Home URL
 router.get("/", (req, res) => {
-  res.send("Node JS APP is working");
+  res.json({
+    error: null,
+    data: 'Node JS APP is working'
+  })
 });
 
 //Get all students
-router.get("/api/students", async (req, res) => {
+router.get("/students", async (req, res) => {
   try {
     const students = await studentModel.find({});
-    res.send(students);
+    res.json({
+      error: null,
+      data: students
+    })
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({
+      error: error,
+    })
   }
 });
 
 //Get Student by id
-router.get("/api/student/:id", async (req, res) => {
+router.get("/student/:id", async (req, res) => {
   try {
     const student = await studentModel.find({ _id: req.params.id });
-    res.send(student);
+    res.json({
+      error: null,
+      data: student
+    })
   } catch (error) {
-    return res.status(500).send(err);
+    res.status(500).json({
+      error: error,
+    })
   }
 });
 
 //Create new Student
-router.post("/api/students", async (req, res) => {
+router.post("/students", async (req, res) => {
   const studentM = new studentModel(req.body);
 
   try {
     await studentM.save();
-    return res.send({ message: "Student saved", student: studentM });
+    res.json({
+      error: null,
+      data: { message: "Student saved", student: studentM }
+    })
   } catch (error) {
-    return res.status(500).send(error);
+    res.status(500).json({
+      error: error,
+    })
   }
 });
 
 // //UPDATE Student by id
 //TODO: return new user
-router.put("/api/students/:id", async (req, res) => {
+router.put("/students/:id", async (req, res) => {
   // const studentM = new studentModel(req.body);
   try {
     await studentModel.findOneAndUpdate(
       { _id: req.params.id },
       { $set: req.body }
     );
-    res.send({ message: "User updated", user: req.body });
+    res.json({
+      error: null,
+      data: { message: "User updated", user: req.body }
+    })
   } catch (error) {
-    return res.status(500).send(error);
+    res.status(500).json({
+      error: error,
+    })
   }
 });
 
 //DELETE Student by id
-router.delete("/api/students/:id", async (req, res) => {
-  studentModel.findByIdAndRemove(req.params.id, (err, student) => {
-    if (!err) {
-      if (!student) res.send({ message: "Student not found" });
-      else res.send({ message: "Student Removed", student: student });
+router.delete("/students/:id", async (req, res) => {
+  studentModel.findByIdAndRemove(req.params.id, (error, student) => {
+    if (!error) {
+      if (!student) 
+        res.status(404).json({
+          error: error,
+          data: {  message: "Student not found" }
+        })
+      else res.json({
+        error: null,
+        data: { message: "Student Removed", student: student }
+      })
     } else {
-      res.status(500).send(err);
+      res.status(500).json({
+        error: error,
+      })
     }
   });
 });

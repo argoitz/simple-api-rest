@@ -1,13 +1,22 @@
 const express = require("express");
 require("express-async-errors");
+const bodyparser = require('body-parser');
+require('dotenv').config();
+
 const app = express();
 const port = process.env.port || 3000;
 const cors = require("cors");
 
-require("./database"); //MongoDB Connection
+
+// Get Body
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.json());
+
+// DB CONNETION
+require("./database");
 const errorHandler = require("./middlewares/error-handler");
 
-//Middleware to allow HTTP request comes from origin and restrict from other sites
+// Middleware to allow HTTP request comes from origin and restrict from other sites
 app.use(
   cors({
     origin: "*",
@@ -16,8 +25,18 @@ app.use(
 );
 
 app.use(express.json());
-//TODO: Add Controller and remove route
-app.use(require("./routes/index.routes"));
+
+// Public Routes
+app.use('/api/user', require('./routes/auth/auth'));
+app.use("/api", require("./routes/index.routes"));
+
+// Private Routes
+const privateRoutes = require('./routes/private/private.routes');
+const verifyToken = require('./routes/validate-token');
+// route middlewares
+app.use('/api/private', verifyToken, privateRoutes);
+
+// Error middleware
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`Listening in ${port}`));
