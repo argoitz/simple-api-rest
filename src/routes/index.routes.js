@@ -12,24 +12,24 @@ const students = [
 
 //Home URL
 router.get("/", (req, res) => {
-  res.json({
+  return res.json({
     error: null,
-    data: 'Node JS APP is working'
-  })
+    data: "Node JS APP is working",
+  });
 });
 
 //Get all students
 router.get("/students", async (req, res) => {
   try {
     const students = await studentModel.find({});
-    res.json({
+    return res.json({
       error: null,
-      data: students
-    })
+      data: students,
+    });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error,
-    })
+    });
   }
 });
 
@@ -37,14 +37,14 @@ router.get("/students", async (req, res) => {
 router.get("/student/:id", async (req, res) => {
   try {
     const student = await studentModel.find({ _id: req.params.id });
-    res.json({
+    return res.json({
       error: null,
-      data: student
-    })
+      data: student,
+    });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error,
-    })
+    });
   }
 });
 
@@ -54,14 +54,14 @@ router.post("/students", async (req, res) => {
 
   try {
     await studentM.save();
-    res.json({
+    return res.json({
       error: null,
-      data: { message: "Student saved", student: studentM }
-    })
+      data: { message: "Student saved", student: studentM },
+    });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error,
-    })
+    });
   }
 });
 
@@ -74,14 +74,14 @@ router.put("/students/:id", async (req, res) => {
       { _id: req.params.id },
       { $set: req.body }
     );
-    res.json({
+    return res.json({
       error: null,
-      data: { message: "User updated", user: req.body }
-    })
+      data: { message: "User updated", user: req.body },
+    });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error,
-    })
+    });
   }
 });
 
@@ -89,19 +89,20 @@ router.put("/students/:id", async (req, res) => {
 router.delete("/students/:id", async (req, res) => {
   studentModel.findByIdAndRemove(req.params.id, (error, student) => {
     if (!error) {
-      if (!student) 
-        res.status(404).json({
+      if (!student)
+        return res.status(404).json({
           error: error,
-          data: {  message: "Student not found" }
-        })
-      else res.json({
-        error: null,
-        data: { message: "Student Removed", student: student }
-      })
+          data: { message: "Student not found" },
+        });
+      else
+        res.json({
+          error: null,
+          data: { message: "Student Removed", student: student },
+        });
     } else {
-      res.status(500).json({
+      return res.status(500).json({
         error: error,
-      })
+      });
     }
   });
 });

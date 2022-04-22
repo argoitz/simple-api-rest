@@ -11,7 +11,7 @@ services:
       - mongo
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - /usr/src/app/node_modules # This line fix "bcrypt invalid ELF header" error 
   mongo:
     container_name: mongodb
     image: mongo
