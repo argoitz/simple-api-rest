@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const MusicianModel = require("../models/Musician-model");
+const MusicianModel = require("../models/Musician.model");
 
 //Home URL
 router.get("/", (req, res) => {

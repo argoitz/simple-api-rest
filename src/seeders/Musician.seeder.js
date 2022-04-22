@@ -1,4 +1,4 @@
-const MusicianModel = require("../models/Musician-model");
+const MusicianModel = require("../models/Musician.model");
 
 const musicians = [
   { name: "Paco", age: 23, enroll: true },

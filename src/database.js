@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const ExecuteSeeders = require("./seeders/DatabaseSeeder");
+const ExecuteSeeders = require("./seeders/Database.seeder");
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.ncdk5.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
 mongoose

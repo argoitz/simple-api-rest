@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const MusicianSchema = require("../models/Musician-model");
+const MusicianSchema = require("../models/Musician.model");
 
 MusicianSchema.methods.joiValidate = function (obj) {
   var schema = {
