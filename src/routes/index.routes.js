@@ -1,14 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const studentModel = require("../models/student-model");
-
-//TODO: MOVE TO SEED
-const students = [
-  { id: 1, name: "Paco", age: 23, enroll: true },
-  { id: 2, name: "Maria", age: 25, enroll: true },
-  { id: 3, name: "Marcos", age: 30, enroll: true },
-  { id: 4, name: "Alicia", age: 28, enroll: true },
-];
+const MusicianModel = require("../models/Musician-model");
 
 //Home URL
 router.get("/", (req, res) => {
@@ -18,13 +10,13 @@ router.get("/", (req, res) => {
   });
 });
 
-//Get all students
-router.get("/students", async (req, res) => {
+//Get all Musicians
+router.get("/musicians", async (req, res) => {
   try {
-    const students = await studentModel.find({});
+    const musician = await MusicianModel.find({});
     return res.json({
       error: null,
-      data: students,
+      data: musician,
     });
   } catch (error) {
     return res.status(500).json({
@@ -33,13 +25,13 @@ router.get("/students", async (req, res) => {
   }
 });
 
-//Get Student by id
-router.get("/student/:id", async (req, res) => {
+//Get Musician by id
+router.get("/musician/:id", async (req, res) => {
   try {
-    const student = await studentModel.find({ _id: req.params.id });
+    const musician = await MusicianModel.find({ _id: req.params.id });
     return res.json({
       error: null,
-      data: student,
+      data: musician,
     });
   } catch (error) {
     return res.status(500).json({
@@ -48,15 +40,15 @@ router.get("/student/:id", async (req, res) => {
   }
 });
 
-//Create new Student
-router.post("/students", async (req, res) => {
-  const studentM = new studentModel(req.body);
+//Create new Musician
+router.post("/musicians", async (req, res) => {
+  const musicianM = new MusicianModel(req.body);
 
   try {
-    await studentM.save();
+    await musicianM.save();
     return res.json({
       error: null,
-      data: { message: "Student saved", student: studentM },
+      data: { message: "Musician saved", musician: musicianM },
     });
   } catch (error) {
     return res.status(500).json({
@@ -65,12 +57,11 @@ router.post("/students", async (req, res) => {
   }
 });
 
-// //UPDATE Student by id
+// //UPDATE Musician by id
 //TODO: return new user
-router.put("/students/:id", async (req, res) => {
-  // const studentM = new studentModel(req.body);
+router.put("/musicians/:id", async (req, res) => {
   try {
-    await studentModel.findOneAndUpdate(
+    await MusicianModel.findOneAndUpdate(
       { _id: req.params.id },
       { $set: req.body }
     );
@@ -85,19 +76,19 @@ router.put("/students/:id", async (req, res) => {
   }
 });
 
-//DELETE Student by id
-router.delete("/students/:id", async (req, res) => {
-  studentModel.findByIdAndRemove(req.params.id, (error, student) => {
+//DELETE Musician by id
+router.delete("/musicians/:id", async (req, res) => {
+  MusicianModel.findByIdAndRemove(req.params.id, (error, musician) => {
     if (!error) {
-      if (!student)
+      if (!musician)
         return res.status(404).json({
           error: error,
-          data: { message: "Student not found" },
+          data: { message: "Musician not found" },
         });
       else
         res.json({
           error: null,
-          data: { message: "Student Removed", student: student },
+          data: { message: "Musician Removed", musician: musician },
         });
     } else {
       return res.status(500).json({
