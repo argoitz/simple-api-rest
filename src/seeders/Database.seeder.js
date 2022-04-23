@@ -1,7 +1,5 @@
-const MusicianSeeder = require("./Musician.seeder");
-
 const ExecuteSeeders = async () => {
-  MusicianSeeder();
+  require("./Musician.seeder");
   // You can add more seeders here (Categories, Instruments, Musical genres...)
   //...
 };

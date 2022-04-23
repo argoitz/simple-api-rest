@@ -11,7 +11,6 @@ const MusicianSeeder = async () => {
   await MusicianModel.deleteMany({});
   await MusicianModel.insertMany(musicians);
 };
-
 MusicianSeeder().then(() => {
   console.log("- MUSICIAN SEEDED");
 });
