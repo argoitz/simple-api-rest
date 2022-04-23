@@ -13,7 +13,7 @@ const MusicianSeeder = async () => {
 };
 
 MusicianSeeder().then(() => {
-  console.log("MUSICIAN SEEDED FINISH");
+  console.log("- MUSICIAN SEEDED");
 });
 
 module.exports = MusicianSeeder;
